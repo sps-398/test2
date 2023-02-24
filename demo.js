@@ -84,3 +84,18 @@ const textNode = document.createTextNode('Item 5');
 list.appendChild(textNode);
 
 itemlist.appendChild(list);
+
+const div = document.createElement('div');
+div.id = 'hello';
+
+const textNode2 = document.createTextNode('Hello World');
+div.appendChild(textNode2);
+
+div.style.backgroundColor = 'green';
+div.style.color = 'white';
+
+const item1 = document.querySelector('.list-group-item:first-child');
+itemlist.insertBefore(div, itemlist.children[0]);
+
+const header = document.querySelector('#main-header .container');
+header.insertBefore(div, header.children[0]);
