@@ -30,7 +30,7 @@
 // title[0].style.fontWeight = 'bold';
 // title[0].style.color = 'green';
 
-const items = document.getElementsByClassName('list-group-item');
+// const items = document.getElementsByClassName('list-group-item');
 
 // items[2].style.backgroundColor = 'green';
 
@@ -39,8 +39,23 @@ const items = document.getElementsByClassName('list-group-item');
 //     items[i].style.fontWeight = 'bold';
 // }
 
-const itemsByTag = document.getElementsByTagName('li');
+// const itemsByTag = document.getElementsByTagName('li');
 
-for(let i in itemsByTag) {
-    itemsByTag[i].style.backgroundColor = 'red';
+// for(let i in itemsByTag) {
+//     itemsByTag[i].style.backgroundColor = 'red';
+// }
+
+// const item2 = document.querySelector('.list-group-item:nth-child(2)');
+// item2.style.backgroundColor = 'green';
+
+// const item3 = document.querySelector('.list-group-item:nth-child(3)');
+// item3.style.display = 'none';
+
+const items = document.querySelectorAll('.list-group-item');
+items[1].style.color = 'green';
+
+const odd = document.querySelectorAll('.list-group-item:nth-child(odd');
+
+for(let i in odd) {
+    odd[i].style.backgroundColor = 'green';
 }
