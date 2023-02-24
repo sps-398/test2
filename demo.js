@@ -21,19 +21,26 @@
 // console.log(document.innerText);
 // headertitle.innerHTML = "<h3>Hello</h3>";
 
-document.title = 'Hello';
+// document.title = 'Hello';
 
-const header = document.getElementById('main-header');
-header.style.borderBottom = 'solid 3px black';
+// const header = document.getElementById('main-header');
+// header.style.borderBottom = 'solid 3px black';
 
-const title = document.getElementsByClassName('title');
-title[0].style.fontWeight = 'bold';
-title[0].style.color = 'green';
+// const title = document.getElementsByClassName('title');
+// title[0].style.fontWeight = 'bold';
+// title[0].style.color = 'green';
 
 const items = document.getElementsByClassName('list-group-item');
 
-items[2].style.backgroundColor = 'green';
+// items[2].style.backgroundColor = 'green';
 
-for(let i in items) {
-    items[i].style.fontWeight = 'bold';
+// Gives error
+// for(let i in items) {
+//     items[i].style.fontWeight = 'bold';
+// }
+
+const itemsByTag = document.getElementsByTagName('li');
+
+for(let i in itemsByTag) {
+    itemsByTag[i].style.backgroundColor = 'red';
 }
