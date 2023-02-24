@@ -1,101 +1,57 @@
-// console.log(document);
-// console.log(document.domain);
-// console.log(document.URL);
-// console.log(document.title);
-// console.log(document.doctype);
-// console.log(document.head);
-// console.log(document.body);
-// console.log(document.all);
-// console.log(document.forms);
-// console.log(document.links);
-// console.log(document.images);
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
 
+// Form submit event
+form.addEventListener('submit', addItem);
+// Delete event
+itemList.addEventListener('click', removeItem);
 
-// document.all[10].textContent = 'Hello';
-// const headertitle = document.getElementById('header-title');
-// console.log(headertitle);
+const deleteBtns = document.querySelectorAll('.delete');
+const list = document.querySelectorAll('.list-group-item');
 
-// headertitle.textContent = 'Hello';
-// headertitle.innerText = 'Goodbye';
-// console.log(document.textContent);
-// console.log(document.innerText);
-// headertitle.innerHTML = "<h3>Hello</h3>";
+for(let i=0;i<deleteBtns.length;i++) {
+    const edit = document.createElement('button');
+    edit.className = 'btn btn-danger btn-sm float-right ml-2';
+    edit.appendChild(document.createTextNode('Edit'));
+    list[i].insertBefore(edit, deleteBtns[i]);
+}
 
-// document.title = 'Hello';
+// Add item
+function addItem(e){
+  e.preventDefault();
 
-// const header = document.getElementById('main-header');
-// header.style.borderBottom = 'solid 3px black';
+  // Get input value
+  var newItem = document.getElementById('item').value;
 
-// const title = document.getElementsByClassName('title');
-// title[0].style.fontWeight = 'bold';
-// title[0].style.color = 'green';
+  // Create new li element
+  var li = document.createElement('li');
+  // Add class
+  li.className = 'list-group-item';
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
 
-// const items = document.getElementsByClassName('list-group-item');
+  // Create del button element
+  var deleteBtn = document.createElement('button');
 
-// items[2].style.backgroundColor = 'green';
+  // Add classes to del button
+  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
 
-// Gives error
-// for(let i in items) {
-//     items[i].style.fontWeight = 'bold';
-// }
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode('X'));
 
-// const itemsByTag = document.getElementsByTagName('li');
+  // Append button to li
+  li.appendChild(deleteBtn);
 
-// for(let i in itemsByTag) {
-//     itemsByTag[i].style.backgroundColor = 'red';
-// }
+  // Append li to list
+  itemList.appendChild(li);
+}
 
-// const item2 = document.querySelector('.list-group-item:nth-child(2)');
-// item2.style.backgroundColor = 'green';
-
-// const item3 = document.querySelector('.list-group-item:nth-child(3)');
-// item3.style.display = 'none';
-
-// const items = document.querySelectorAll('.list-group-item');
-// items[1].style.color = 'green';
-
-// const odd = document.querySelectorAll('.list-group-item:nth-child(odd');
-
-// for(let i in odd) {
-//     odd[i].style.backgroundColor = 'green';
-// }
-
-const itemlist = document.querySelector('#items');
-itemlist.parentElement.style.backgroundColor = 'grey';
-
-itemlist.lastElementChild.style.backgroundColor = 'red';
-
-itemlist.lastChild.style.color = 'white';
-
-itemlist.firstElementChild.style.backgroundColor = 'blue';
-itemlist.firstChild.style.color = 'white';
-
-const input = document.querySelector('#input');
-input.nextElementSibling.style.backgroundColor = 'white';
-input.nextSibling.style.color = 'black';
-
-itemlist.previousElementSibling.style.color = 'green';
-itemlist.previousSibling.style.backgroundColor = 'white';
-
-const list = document.createElement('li');
-list.setAttribute("class", "list-group-item");
-
-const textNode = document.createTextNode('Item 5');
-list.appendChild(textNode);
-
-itemlist.appendChild(list);
-
-const div = document.createElement('div');
-div.id = 'hello';
-
-const textNode2 = document.createTextNode('Hello World');
-div.appendChild(textNode2);
-
-div.style.backgroundColor = 'green';
-div.style.color = 'white';
-
-const item1 = document.querySelector('.list-group-item:first-child');
-itemlist.insertBefore(div, itemlist.children[0]);
-
-const header = document.querySelector('#main-header .container');
-header.insertBefore(div, header.children[0]);
+// Remove item
+function removeItem(e){
+  if(e.target.classList.contains('delete')){
+    if(confirm('Are You Sure?')){
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
