@@ -51,11 +51,36 @@
 // const item3 = document.querySelector('.list-group-item:nth-child(3)');
 // item3.style.display = 'none';
 
-const items = document.querySelectorAll('.list-group-item');
-items[1].style.color = 'green';
+// const items = document.querySelectorAll('.list-group-item');
+// items[1].style.color = 'green';
 
-const odd = document.querySelectorAll('.list-group-item:nth-child(odd');
+// const odd = document.querySelectorAll('.list-group-item:nth-child(odd');
 
-for(let i in odd) {
-    odd[i].style.backgroundColor = 'green';
-}
+// for(let i in odd) {
+//     odd[i].style.backgroundColor = 'green';
+// }
+
+const itemlist = document.querySelector('#items');
+itemlist.parentElement.style.backgroundColor = 'grey';
+
+itemlist.lastElementChild.style.backgroundColor = 'red';
+
+itemlist.lastChild.style.color = 'white';
+
+itemlist.firstElementChild.style.backgroundColor = 'blue';
+itemlist.firstChild.style.color = 'white';
+
+const input = document.querySelector('#input');
+input.nextElementSibling.style.backgroundColor = 'white';
+input.nextSibling.style.color = 'black';
+
+itemlist.previousElementSibling.style.color = 'green';
+itemlist.previousSibling.style.backgroundColor = 'white';
+
+const list = document.createElement('li');
+list.setAttribute("class", "list-group-item");
+
+const textNode = document.createTextNode('Item 5');
+list.appendChild(textNode);
+
+itemlist.appendChild(list);
