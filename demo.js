@@ -29,3 +29,11 @@ header.style.borderBottom = 'solid 3px black';
 const title = document.getElementsByClassName('title');
 title[0].style.fontWeight = 'bold';
 title[0].style.color = 'green';
+
+const items = document.getElementsByClassName('list-group-item');
+
+items[2].style.backgroundColor = 'green';
+
+for(let i in items) {
+    items[i].style.fontWeight = 'bold';
+}
