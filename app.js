@@ -17,6 +17,11 @@ function onSubmit(e) {
     }, 3000);
   }
   else {
-        localStorage.setItem(nameInput.value, emailInput.value);
+        let user = {
+          name: nameInput.value,
+          email: emailInput.value
+        }
+
+        localStorage.setItem("users", JSON.stringify(user));
   }
 }
