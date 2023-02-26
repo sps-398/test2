@@ -34,14 +34,29 @@ function onSubmit(e) {
         li.appendChild(document.createTextNode(userInfo));
 
         deleteButton = document.createElement('button');
+        editButton = document.createElement('button');
         deleteButton.appendChild(document.createTextNode('DELETE'));
+        editButton.appendChild(document.createTextNode('EDIT'));
         deleteButton.style.color = 'black';
+        editButton.style.color = 'black';
         li.appendChild(deleteButton);
+        li.appendChild(editButton);
         ul.appendChild(li);
         
         deleteButton.addEventListener('click', (e) => {
           ul.removeChild(li);
           localStorage.removeItem(user.email);
+        });
+
+        editButton.addEventListener('click', (e) => {
+          ul.removeChild(li);
+          let currUser = localStorage.getItem(user.email);
+          localStorage.removeItem(user.email);
+
+          currUser = JSON.parse(currUser);
+          nameInput.value = currUser.name;
+          emailInput.value = currUser.email;
+          phoneInput.value = currUser.phone;
         });
       }
 
