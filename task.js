@@ -4,8 +4,9 @@ const user = {
     lastActivityTime: Date.now()
 };
 
-const createPost = (post) => {
-    return new Promise((resolve, reject) => {
+const activity = async () => {
+    const createPost = (post) => {
+        return new Promise((resolve, reject) => {
         setTimeout(() => {
             posts.push(post);
             resolve(post);
@@ -13,14 +14,21 @@ const createPost = (post) => {
     });
 };
 
-const updateLastUserActivityTime = () => {
-    return new Promise((resolve, reject) => {
+const updateLastUserActivityTime = new Promise((resolve, reject) => {
         setTimeout(() => {
             user.lastActivityTime = Date.now()
             resolve(user.lastActivityTime);
         }, 1000);
     });
-};
+
+    try {
+        let values = await Promise.all([createPost({ title: 'Post1' }), createPost({ title: 'Post2' }), createPost({ title: 'Post3' }),
+                                         createPost({ title: 'Post4' }), updateLastUserActivityTime]);
+        values.forEach(value => console.log(value));
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 const deletePost = () => {
     return new Promise((resolve, reject) => {
@@ -33,11 +41,10 @@ const deletePost = () => {
                 reject('Error: Array is Empty');
         }, 1000);
     });
-};
+}
 
-Promise.all([createPost({ title: 'Post1' }), createPost({ title: 'Post2' }), createPost({ title: 'Post3' }), createPost({ title: 'Post4' }), updateLastUserActivityTime()])
-    .then(values => {
-        values.forEach(value => console.log(value));
+activity()
+    .then(() => {
         deletePost()
             .then(() => {
                 posts.forEach((post) => console.log(post));
