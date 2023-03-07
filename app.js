@@ -5,9 +5,15 @@ const phoneInput = document.querySelector('#phone');
 const msg = document.querySelector('.msg');
 let deleteButton=null;
 
+const axiosInstance = axios.create({
+  baseURL: 'https://crudcrud.com/api/17b600199f2341579514427291e5e90b/appointmentData'
+});
+
+render();
+
 form.addEventListener('submit', onSubmit);
 
-function onSubmit(e) {
+async function onSubmit(e) {
   e.preventDefault();
 
   if(nameInput.value === '' || emailInput.value === '') {
@@ -15,7 +21,7 @@ function onSubmit(e) {
     msg.innerHTML = 'Please enter the fields';
 
     setTimeout(() => {
-      msg.remove();
+      msg.remove(); 
     }, 3000);
   }
   else {
@@ -25,39 +31,76 @@ function onSubmit(e) {
           phone: phoneInput.value
         }
 
-        localStorage.setItem(user.email, JSON.stringify(user));
+        try{
+          const result = await axiosInstance.post('/', user);
+          form.reset();
+          render();
+        } catch(err) {
+          console.log(err);
+        }        
+      }
+
+    }
+
+    async function render() {
+        let res;
+        try {
+          res = await axiosInstance.get('/');
+        } catch(err) {
+          console.log(err);
+          return;
+        }
+
+        const users = res.data;
 
         const ul = document.getElementById('users');
-        const li = document.createElement('li');
-        li.className = 'item';
-        const userInfo = `${nameInput.value},${emailInput.value},${phoneInput.value}`;
-        li.appendChild(document.createTextNode(userInfo));
+        ul.innerHTML = '';
 
-        deleteButton = document.createElement('button');
-        editButton = document.createElement('button');
-        deleteButton.appendChild(document.createTextNode('DELETE'));
-        editButton.appendChild(document.createTextNode('EDIT'));
-        deleteButton.style.color = 'black';
-        editButton.style.color = 'black';
-        li.appendChild(deleteButton);
-        li.appendChild(editButton);
-        ul.appendChild(li);
-        
-        deleteButton.addEventListener('click', (e) => {
-          ul.removeChild(li);
-          localStorage.removeItem(user.email);
-        });
+        users.forEach(user => {
+          const uid = user._id;
+          const li = document.createElement('li');
+          li.className = 'item';
+          li.id = uid;
+          const userInfo = `${user.name},${user.email},${user.phone}`;
+          li.appendChild(document.createTextNode(userInfo));
 
-        editButton.addEventListener('click', (e) => {
-          ul.removeChild(li);
-          let currUser = localStorage.getItem(user.email);
-          localStorage.removeItem(user.email);
+          deleteButton = document.createElement('button');
+          editButton = document.createElement('button');
 
-          currUser = JSON.parse(currUser);
-          nameInput.value = currUser.name;
-          emailInput.value = currUser.email;
-          phoneInput.value = currUser.phone;
+          deleteButton.style.color = 'black';
+          editButton.style.color = 'black';
+
+          deleteButton.appendChild(document.createTextNode('DELETE'));
+          editButton.appendChild(document.createTextNode('EDIT'));
+          li.appendChild(deleteButton);
+          li.appendChild(editButton);
+          ul.appendChild(li);
+          
+          deleteButton.addEventListener('click', (e) => {
+            deleteUser(li.id);
+          });
+
+          editButton.addEventListener('click', (e) => {
+            editUser(user);
+          });
         });
       }
 
+    async function editUser(user) {
+      deleteUser(user._id);
+      
+      nameInput.value = user.name;
+      emailInput.value = user.email;
+      phoneInput.value = user.phone;
+
+      render();
+    }
+
+    async function deleteUser(id) {
+      try {
+        await axiosInstance.delete(`/${id}`)
+        render();
+      } catch(err) {
+        console.log(err);
+      }
     }
