@@ -9,7 +9,10 @@ const axiosInstance = axios.create({
   baseURL: 'https://crudcrud.com/api/17b600199f2341579514427291e5e90b/appointmentData'
 });
 
-render();
+window.addEventListener('DOMContentLoaded', () => {
+  render();
+});
+
 
 form.addEventListener('submit', onSubmit);
 
@@ -88,7 +91,7 @@ async function onSubmit(e) {
 
     async function editUser(user) {
       deleteUser(user._id);
-      
+
       nameInput.value = user.name;
       emailInput.value = user.email;
       phoneInput.value = user.phone;
